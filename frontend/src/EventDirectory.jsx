@@ -23,7 +23,7 @@ const EventDirectory = () => {
       if (tagFilters.length > 0) params.set('tags', tagFilters.join(','))
 
       const res = await fetch(
-        `http://localhost:5000/api/participants/events/${eventId}/directory?${params}`,
+        `https://networking-k0cv.onrender.com/api/participants/events/${eventId}/directory?${params}`,
         { headers: { Authorization: `Bearer ${idToken}` } }
       )
       const data = await res.json()
@@ -43,16 +43,16 @@ const EventDirectory = () => {
       try {
         const idToken = await auth.currentUser.getIdToken()
         const [eventRes, tagsRes, favsRes, dirRes] = await Promise.all([
-          fetch(`http://localhost:5000/api/events/${eventId}`, {
+          fetch(`https://networking-k0cv.onrender.com/api/events/${eventId}`, {
             headers: { Authorization: `Bearer ${idToken}` }
           }),
-          fetch(`http://localhost:5000/api/tags/events/${eventId}`, {
+          fetch(`https://networking-k0cv.onrender.com/api/tags/events/${eventId}`, {
             headers: { Authorization: `Bearer ${idToken}` }
           }),
-          fetch(`http://localhost:5000/api/favorites/events/${eventId}`, {
+          fetch(`https://networking-k0cv.onrender.com/api/favorites/events/${eventId}`, {
             headers: { Authorization: `Bearer ${idToken}` }
           }),
-          fetch(`http://localhost:5000/api/participants/events/${eventId}/directory`, {
+          fetch(`https://networking-k0cv.onrender.com/api/participants/events/${eventId}/directory`, {
             headers: { Authorization: `Bearer ${idToken}` }
           })
         ])
@@ -104,7 +104,7 @@ const EventDirectory = () => {
       const idToken = await auth.currentUser.getIdToken()
       const isFav = favorites.has(participantId)
       await fetch(
-        `http://localhost:5000/api/favorites/events/${eventId}/participants/${participantId}`,
+        `https://networking-k0cv.onrender.com/api/favorites/events/${eventId}/participants/${participantId}`,
         { method: isFav ? 'DELETE' : 'POST', headers: { Authorization: `Bearer ${idToken}` } }
       )
       setFavorites(prev => {

@@ -1,8 +1,20 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from './config/firebase'
 import heroimg from './assets/hero.png'
 
 const Home = () => {
+  const [user, setUser] = useState(null)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser)
+    })
+    return () => unsubscribe()
+  }, [])
+
   return (
     <div className="min-h-screen bg-[#f0f7ff] font-sans text-slate-900 relative overflow-hidden">
       {/* Subtle Diagonal Stripes Pattern */}
@@ -29,9 +41,18 @@ const Home = () => {
           </div>
 
           <div className="flex items-center gap-6">
-            <Link to="/auth" className="rounded-full border border-slate-200 bg-white/50 backdrop-blur px-6 py-2 text-[13px] font-bold text-slate-700 hover:bg-white transition-all flex items-center gap-2">
-              Login <span className="text-lg">→</span>
-            </Link>
+            {user ? (
+              <button 
+                onClick={() => navigate('/dashboard')}
+                className="rounded-full border border-blue-200 bg-blue-50 backdrop-blur px-6 py-2 text-[13px] font-bold text-blue-600 hover:bg-blue-100 transition-all flex items-center gap-2"
+              >
+                Go to Dashboard <span className="text-lg">→</span>
+              </button>
+            ) : (
+              <Link to="/auth" className="rounded-full border border-slate-200 bg-white/50 backdrop-blur px-6 py-2 text-[13px] font-bold text-slate-700 hover:bg-white transition-all flex items-center gap-2">
+                Login <span className="text-lg">→</span>
+              </Link>
+            )}
           </div>
         </div>
       </nav>

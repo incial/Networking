@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
-  signInWithPopup 
+  signInWithPopup,
+  onAuthStateChanged
 } from 'firebase/auth'
 import { auth, googleProvider } from './config/firebase'
 import heroimg from './assets/hero.png'
@@ -15,8 +16,20 @@ const Auth = () => {
   const [name, setName] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [authLoading, setAuthLoading] = useState(true)
   
   const navigate = useNavigate()
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate('/dashboard')
+      }
+      setAuthLoading(false)
+    })
+    return () => unsubscribe()
+  }, [navigate])
 
   const handleAuth = async (e) => {
     e.preventDefault()
@@ -35,7 +48,7 @@ const Auth = () => {
       const idToken = await user.getIdToken()
 
       // Sync user with backend
-      await fetch('http://localhost:5000/api/auth/sync', {
+      await fetch('https://networking-k0cv.onrender.com/api/auth/sync', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +80,7 @@ const Auth = () => {
       const idToken = await user.getIdToken()
 
       // Sync user with backend
-      await fetch('http://localhost:5000/api/auth/sync', {
+      await fetch('https://networking-k0cv.onrender.com/api/auth/sync', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,6 +101,14 @@ const Auth = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#f0f7ff]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+      </div>
+    )
   }
 
   return (
@@ -160,7 +181,7 @@ const Auth = () => {
             
             <div className="mb-10">
               <h2 className="text-3xl font-black text-[#1e293b] uppercase tracking-tighter leading-none mb-3">
-                {isLogin ? 'Authenticate' : 'Join Event'}
+                {isLogin ? 'Login' : 'Signup'}
               </h2>
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest border-y border-slate-50 py-3">
                 {isLogin ? 'Member of the Networking Suite' : 'Ready for ROI-Focused Networking'}
@@ -176,7 +197,7 @@ const Auth = () => {
             <form className="space-y-5" onSubmit={handleAuth}>
               {!isLogin && (
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-slate-500 uppercase ml-1">Attendee Name</label>
+                  <label className="text-[10px] font-black text-slate-500 uppercase ml-1">Name</label>
                   <input 
                     type="text" 
                     placeholder="FULL NAME"
@@ -189,7 +210,7 @@ const Auth = () => {
               )}
               
               <div className="space-y-1.5">
-                <label className="text-[10px] font-black text-slate-500 uppercase ml-1">Professional Email</label>
+                <label className="text-[10px] font-black text-slate-500 uppercase ml-1"> Email</label>
                 <input 
                   type="email" 
                   placeholder="NAME@COMPANY.COM"
@@ -202,7 +223,7 @@ const Auth = () => {
 
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center ml-1">
-                  <label className="text-[10px] font-black text-slate-500 uppercase">Secure Key</label>
+                  <label className="text-[10px] font-black text-slate-500 uppercase">Password</label>
                   {isLogin && <a href="#" className="text-[9px] font-black text-blue-600 uppercase hover:underline underline-offset-2">Recover?</a>}
                 </div>
                 <input 
@@ -220,7 +241,7 @@ const Auth = () => {
                 disabled={loading}
                 className="w-full bg-blue-600 text-white font-black text-[11px] uppercase py-4.5 rounded-[10px] shadow-lg shadow-blue-600/20 hover:scale-[1.02] active:scale-[0.98] transition-transform mt-4 tracking-[0.15em] disabled:opacity-50"
               >
-                {loading ? 'Processing...' : (isLogin ? 'Authenticate →' : 'Begin Networking →')}
+                {loading ? 'Processing...' : (isLogin ? 'Login →' : 'Begin Networking →')}
               </button>
             </form>
 
@@ -254,7 +275,7 @@ const Auth = () => {
               }}
               className="ml-2 text-blue-600 hover:underline decoration-2 underline-offset-4"
             >
-              {isLogin ? 'Request Slot' : 'Authenticate'}
+              {isLogin ? 'Sign up' : 'Login'}
             </button>
           </p>
         </div>

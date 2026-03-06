@@ -8,7 +8,7 @@ const AdminDashboard = () => {
   const fetchPending = async () => {
     try {
       const idToken = await auth.currentUser.getIdToken()
-      const res = await fetch('http://localhost:5000/api/events/admin/pending', {
+      const res = await fetch('https://networking-k0cv.onrender.com/api/events/admin/pending', {
         headers: { 'Authorization': `Bearer ${idToken}` }
       })
       const data = await res.json()
@@ -22,7 +22,7 @@ const AdminDashboard = () => {
 
   const handleAction = async (id, action) => {
     const idToken = await auth.currentUser.getIdToken()
-    await fetch(`http://localhost:5000/api/events/${id}/${action}`, {
+    await fetch(`https://networking-k0cv.onrender.com/api/events/${id}/${action}`, {
       method: 'PATCH',
       headers: { 'Authorization': `Bearer ${idToken}` }
     })

@@ -21,7 +21,7 @@ const Dashboard = () => {
         const idToken = await auth.currentUser.getIdToken()
         
         // Fetch Profile
-        const profileResponse = await fetch('http://localhost:5000/api/users/profile', {
+        const profileResponse = await fetch('https://networking-k0cv.onrender.com/api/users/profile', {
           headers: { 'Authorization': `Bearer ${idToken}` }
         })
         const profileData = await profileResponse.json()
@@ -38,8 +38,8 @@ const Dashboard = () => {
 
         // Fetch My Events + Joined Events in parallel
         const [eventsResponse, joinedResponse] = await Promise.all([
-          fetch('http://localhost:5000/api/events/my-events',  { headers: { 'Authorization': `Bearer ${idToken}` } }),
-          fetch('http://localhost:5000/api/users/joined-events', { headers: { 'Authorization': `Bearer ${idToken}` } })
+          fetch('https://networking-k0cv.onrender.com/api/events/my-events',  { headers: { 'Authorization': `Bearer ${idToken}` } }),
+          fetch('https://networking-k0cv.onrender.com/api/users/joined-events', { headers: { 'Authorization': `Bearer ${idToken}` } })
         ])
         const [eventsData, joinedData] = await Promise.all([eventsResponse.json(), joinedResponse.json()])
         if (Array.isArray(eventsData)) setMyEvents(eventsData)
@@ -68,7 +68,7 @@ const Dashboard = () => {
   const handleRequestOrganizer = async () => {
     try {
       const idToken = await auth.currentUser.getIdToken()
-      const response = await fetch('http://localhost:5000/api/users/request-organizer', {
+      const response = await fetch('https://networking-k0cv.onrender.com/api/users/request-organizer', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${idToken}` }
       })
@@ -102,11 +102,63 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
+    <div className="min-h-screen bg-gray-50 font-sans flex flex-col md:flex-row">
 
-      {/* Top header */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-10">
-        <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
+      {/* Desktop Sidebar Nav */}
+      <nav className="hidden md:flex fixed left-0 top-0 bottom-0 w-20 bg-white border-r border-gray-100 flex-col items-center py-8 z-30 shadow-sm">
+        <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center mb-8 shadow-lg shadow-blue-100 flex-shrink-0">
+          <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        
+        <div className="flex-1 flex flex-col gap-4 items-center">
+          <button
+            onClick={() => setActiveTab('events')}
+            title="Dashboard"
+            className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${
+              activeTab === 'events' ? 'bg-blue-50 text-blue-600 shadow-inner' : 'text-gray-400 hover:bg-gray-50'
+            }`}
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </button>
+          
+          <button
+            onClick={() => navigate('/')}
+            title="Explore"
+            className="w-12 h-12 rounded-2xl flex items-center justify-center text-gray-400 hover:bg-gray-50 transition-all"
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+          
+          <button
+            onClick={() => setActiveTab('profile')}
+            title="Profile"
+            className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${
+              activeTab === 'profile' ? 'bg-blue-50 text-blue-600 shadow-inner' : 'text-gray-400 hover:bg-gray-50'
+            }`}
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </button>
+        </div>
+
+        <button onClick={handleSignOut} title="Sign Out" className="w-12 h-12 rounded-2xl flex items-center justify-center text-red-400 hover:bg-red-50 transition-all">
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        </button>
+      </nav>
+
+      <div className="flex-1 md:ml-20 flex flex-col">
+        {/* Top header */}
+        <header className="bg-white border-b border-gray-100 sticky top-0 z-10">
+          <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between md:h-16">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center">
               <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -126,8 +178,12 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* Scrollable content */}
-      <main className="max-w-lg mx-auto px-4 pt-5 pb-28 space-y-4">
+      {/* Scrollable content - now in the flex container */}
+      <main className="max-w-5xl mx-auto px-4 pt-5 pb-20 md:pb-10 w-full space-y-4 md:space-y-6 flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          
+          {/* Main content - takes 8 cols on desktop */}
+          <div className="md:col-span-8 space-y-6">
 
         {/* â”€â”€â”€ EVENTS TAB â”€â”€â”€ */}
         {activeTab === 'events' && <>
@@ -450,10 +506,63 @@ const Dashboard = () => {
           </div>
         </>}
 
+        </div>
+
+        {/* Right Sidebar - Desktop only (4 cols) */}
+        <aside className="hidden md:block md:col-span-4 space-y-6 sticky top-20">
+          {/* Admin panel shortcut */}
+          {userData?.role === 'SUPER_ADMIN' && activeTab === 'events' && (
+            <button
+              onClick={() => navigate('/admin')}
+              className="w-full bg-gradient-to-br from-purple-600 to-indigo-700 text-white rounded-[28px] p-6 flex items-center gap-4 shadow-lg shadow-purple-200 hover:shadow-xl hover:scale-[1.02] transition-all"
+            >
+              <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center border border-white/30 flex-shrink-0">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <div className="text-left">
+                <p className="text-xs font-black uppercase opacity-70">Admin Access</p>
+                <p className="font-bold text-lg leading-tight">Control Panel</p>
+              </div>
+            </button>
+          )}
+
+          {/* Utilities card */}
+          <div className="bg-white rounded-[28px] border border-gray-100 p-6 shadow-sm">
+            <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Quick Actions</h3>
+            <div className="space-y-2">
+              <button onClick={() => navigate('/')} className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-2xl hover:bg-gray-900 hover:text-white transition-all group">
+                <span className="text-xs uppercase font-black">Find Events</span>
+                <svg className="w-4 h-4 opacity-50 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+              <button onClick={() => navigate('/create-event')} className="w-full flex items-center justify-between p-3 bg-blue-50 text-blue-600 rounded-2xl hover:bg-blue-600 hover:text-white transition-all group">
+                <span className="text-xs uppercase font-black">Host Event</span>
+                <svg className="w-4 h-4 opacity-50 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Promo card */}
+          <div className="bg-gradient-to-br from-indigo-500 to-purple-700 rounded-[28px] p-6 text-white shadow-xl shadow-indigo-200 overflow-hidden relative group">
+            <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
+            <p className="text-lg font-black leading-tight mb-2 relative z-10">Unlock more.</p>
+            <p className="text-xs text-indigo-100 font-medium opacity-80 mb-6 relative z-10">Organize events, build your network, and take control.</p>
+            <button onClick={() => navigate('/')} className="w-full bg-white text-indigo-700 rounded-xl text-xs font-black uppercase tracking-widest py-3 shadow-lg hover:-translate-y-1 transition-all relative z-10">Explore ✨</button>
+          </div>
+        </aside>
+        </div>
       </main>
 
-      {/* â”€â”€â”€ Bottom Navigation â”€â”€â”€ */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-20">
+      {/* Close flex-1 wrapper */}
+      </div>
+
+      {/* Mobile-only Bottom Navigation */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-20 w-full">
         <div className="max-w-lg mx-auto flex items-end px-6 pb-2 pt-1">
 
           {/* Events tab */}
@@ -543,6 +652,7 @@ const Dashboard = () => {
         </div>
       )}
 
+      {/* Closing root flex container */}
     </div>
   )
 }

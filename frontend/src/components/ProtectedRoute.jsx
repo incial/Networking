@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
       if (currentUser) {
         try {
           const idToken = await currentUser.getIdToken()
-          const res = await fetch('http://localhost:5000/api/users/profile', {
+          const res = await fetch('https://networking-k0cv.onrender.com/api/users/profile', {
             headers: { 'Authorization': `Bearer ${idToken}` }
           })
           const data = await res.json()

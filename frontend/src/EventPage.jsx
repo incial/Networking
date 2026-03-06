@@ -21,7 +21,7 @@ const EventPage = () => {
   const [joinForm, setJoinForm] = useState({ linkedin_url: '', company: '', designation: '' })
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/events/slug/${slug}`)
+    fetch(`https://networking-k0cv.onrender.com/api/events/slug/${slug}`)
       .then(res => { if (!res.ok) throw new Error(); return res.json() })
       .then(data => setEvent(data))
       .catch(() => setEventError('Event not found or no longer available.'))
@@ -40,8 +40,8 @@ const EventPage = () => {
       try {
         const idToken = await authUser.getIdToken()
         const [tagsRes, profileRes] = await Promise.all([
-          fetch(`http://localhost:5000/api/tags/events/${event.id}`, { headers: { Authorization: `Bearer ${idToken}` } }),
-          fetch('http://localhost:5000/api/users/profile',            { headers: { Authorization: `Bearer ${idToken}` } })
+          fetch(`https://networking-k0cv.onrender.com/api/tags/events/${event.id}`, { headers: { Authorization: `Bearer ${idToken}` } }),
+          fetch('https://networking-k0cv.onrender.com/api/users/profile',            { headers: { Authorization: `Bearer ${idToken}` } })
         ])
         const [tagsData, profileData] = await Promise.all([tagsRes.json(), profileRes.json()])
         if (Array.isArray(tagsData)) setTags(tagsData)
@@ -71,7 +71,7 @@ const EventPage = () => {
     setJoinError('')
     try {
       const idToken = await authUser.getIdToken()
-      const res = await fetch(`http://localhost:5000/api/participants/join/${slug}`, {
+      const res = await fetch(`https://networking-k0cv.onrender.com/api/participants/join/${slug}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${idToken}` },
         body: JSON.stringify({ join_method: 'QR', selected_tags: selectedTags, ...joinForm })
