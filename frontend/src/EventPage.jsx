@@ -64,7 +64,7 @@ const EventPage = () => {
   }
 
   const toggleTag = id =>
-    setSelectedTags(prev => prev.includes(id) ? prev.filter(t => t !== id) : [...prev, id])
+    setSelectedTags(prev => prev.includes(id) ? [] : [id])
 
   const handleJoin = async () => {
     setJoining(true)
@@ -206,8 +206,8 @@ const EventPage = () => {
             {/* Tag picker */}
             {tags.length > 0 && (
               <div className="bg-white rounded-2xl border border-gray-100 p-5">
-                <p className="text-sm font-semibold text-gray-900 mb-1">Pick your tags</p>
-                <p className="text-xs text-gray-400 mb-4">Select what describes you at this event. Others will see these.</p>
+                <p className="text-sm font-semibold text-gray-900 mb-1">Pick your tag</p>
+                <p className="text-xs text-gray-400 mb-4">Select what describes you best at this event. Others will see this.</p>
                 <div className="flex flex-wrap gap-2">
                   {tags.map(tag => (
                     <button
