@@ -22,14 +22,14 @@ router.get("/slug/:slug", getEventBySlug);
 
 // Authenticated routes
 router.get("/approved", authenticate, getAllApprovedEvents);
-router.get("/my-events", authenticate, authorizeRoles("ORGANIZER"), getMyEvents);
+router.get("/my-events", authenticate, authorizeRoles("ORGANIZER", "PARTICIPANT"), getMyEvents);
 router.get("/:id", authenticate, getEventById);
 router.get("/:slug/qr", authenticate, generateQRCode);
 
-// Organizer routes
-router.post("/", authenticate, authorizeRoles("ORGANIZER"), createEvent);
-router.put("/:id", authenticate, authorizeRoles("ORGANIZER"), updateEvent);
-router.patch("/:id/archive", authenticate, authorizeRoles("ORGANIZER"), archiveEvent);
+// Organizer routes (now includes PARTICIPANT)
+router.post("/", authenticate, authorizeRoles("ORGANIZER", "PARTICIPANT"), createEvent);
+router.put("/:id", authenticate, authorizeRoles("ORGANIZER", "PARTICIPANT"), updateEvent);
+router.patch("/:id/archive", authenticate, authorizeRoles("ORGANIZER", "PARTICIPANT"), archiveEvent);
 
 // Super Admin routes
 router.get("/admin/pending", authenticate, authorizeRoles("SUPER_ADMIN"), getPendingEvents);
