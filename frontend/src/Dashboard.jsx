@@ -102,7 +102,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans flex flex-col md:flex-row">
+    <div style={{ fontFamily: 'Poppins, sans-serif' }} className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
 
       {/* Desktop Sidebar Nav */}
       <nav className="hidden md:flex fixed left-0 top-0 bottom-0 w-20 bg-white border-r border-gray-100 flex-col items-center py-8 z-30 shadow-sm">
@@ -165,7 +165,7 @@ const Dashboard = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <span className="font-bold text-gray-900 text-base tracking-tight">EventSuite</span>
+            <span style={{ fontFamily: 'Poppins, sans-serif' }} className="font-bold text-gray-900 text-base tracking-tight">EventSuite</span>
           </div>
           <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
             userData?.role === 'SUPER_ADMIN' ? 'bg-purple-100 text-purple-700' :
@@ -190,10 +190,10 @@ const Dashboard = () => {
 
           {/* Greeting */}
           <div>
-            <h1 className="text-xl font-bold text-gray-900">
+            <h1 style={{ fontFamily: 'Poppins, sans-serif' }} className="text-xl font-bold text-gray-900">
               Hey, {userData?.name?.split(' ')[0] || 'there'}
             </h1>
-            <p className="text-sm text-gray-400 mt-0.5">
+            <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm text-gray-400 mt-0.5">
               {myEvents.filter(e => e.status === 'APPROVED').length} live event{myEvents.filter(e => e.status === 'APPROVED').length !== 1 ? 's' : ''}
             </p>
           </div>
@@ -201,16 +201,16 @@ const Dashboard = () => {
           {/* Stats row */}
           <div className="grid grid-cols-3 gap-3">
             <div className="bg-white rounded-2xl p-4 border border-gray-100 text-center">
-              <p className="text-2xl font-bold text-gray-900">{myEvents.length}</p>
-              <p className="text-xs text-gray-400 mt-0.5">Total</p>
+              <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-2xl font-bold text-gray-900">{myEvents.length}</p>
+              <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-xs text-gray-400 mt-0.5">Total</p>
             </div>
             <div className="bg-white rounded-2xl p-4 border border-gray-100 text-center">
-              <p className="text-2xl font-bold text-green-600">{myEvents.filter(e => e.status === 'APPROVED').length}</p>
-              <p className="text-xs text-gray-400 mt-0.5">Live</p>
+              <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-2xl font-bold text-green-600">{myEvents.filter(e => e.status === 'APPROVED').length}</p>
+              <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-xs text-gray-400 mt-0.5">Live</p>
             </div>
             <div className="bg-white rounded-2xl p-4 border border-gray-100 text-center">
-              <p className="text-2xl font-bold text-amber-500">{myEvents.filter(e => e.status === 'PENDING').length}</p>
-              <p className="text-xs text-gray-400 mt-0.5">Pending</p>
+              <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-2xl font-bold text-amber-500">{myEvents.filter(e => e.status === 'PENDING').length}</p>
+              <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-xs text-gray-400 mt-0.5">Pending</p>
             </div>
           </div>
 
@@ -224,6 +224,7 @@ const Dashboard = () => {
                   className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
                     eventsSubTab === 'my' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-400'
                   }`}
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
                 >
                   My Events
                 </button>
@@ -232,6 +233,7 @@ const Dashboard = () => {
                   className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
                     eventsSubTab === 'joined' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-400'
                   }`}
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
                 >
                   Joined {joinedEvents.length > 0 && <span className="ml-1 bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded-full text-[10px]">{joinedEvents.length}</span>}
                 </button>
@@ -240,6 +242,7 @@ const Dashboard = () => {
                 <button
                   onClick={() => navigate('/create-event')}
                   className="text-sm font-semibold text-blue-600 active:opacity-60"
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
                 >
                   + New
                 </button>
@@ -255,14 +258,14 @@ const Dashboard = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
-                  <p className="text-sm text-gray-400">You haven't joined any events yet.</p>
+                  <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm text-gray-400\">You haven't joined any events yet.</p>
                 </div>
               ) : (
                 <div className="space-y-3">
                   {joinedEvents.map(event => (
                     <div key={event.id} className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
                       <div className="p-4">
-                        <h3 className="font-semibold text-gray-900 text-sm leading-snug mb-1">{event.name}</h3>
+                        <h3 style={{ fontFamily: 'Poppins, sans-serif' }} className="font-semibold text-gray-900 text-sm leading-snug mb-1">{event.name}</h3>
                         <div className="flex flex-wrap gap-x-3 text-xs text-gray-400">
                           {event.event_date && (
                             <span>{new Date(event.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
@@ -270,7 +273,7 @@ const Dashboard = () => {
                           {event.location && <span>{event.location}</span>}
                           {event.organizer_name && <span>by {event.organizer_name}</span>}
                         </div>
-                        <p className="text-xs text-gray-300 mt-1">
+                        <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-xs text-gray-300 mt-1">
                           {event.participant_count} attendee{event.participant_count != 1 ? 's' : ''}
                         </p>
                       </div>
@@ -290,16 +293,14 @@ const Dashboard = () => {
                 </div>
               )
             ) : myEvents.length === 0 ? (
-              <div
-                onClick={() => navigate('/create-event')}
-                className="bg-white rounded-2xl border-2 border-dashed border-gray-200 p-10 flex flex-col items-center gap-3 active:bg-gray-50"
-              >
+                <div className="bg-white rounded-2xl border-2 border-dashed border-gray-200 p-10 flex flex-col items-center gap-3 active:bg-gray-50"
+                >
                 <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center">
                   <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
-                <p className="text-sm font-medium text-gray-400 text-center">
+                <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm font-medium text-gray-400 text-center">
                   No events yet.<br />Tap to create your first one.
                 </p>
               </div>
@@ -311,7 +312,7 @@ const Dashboard = () => {
                     <div key={event.id} className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
                       <div className="p-4">
                         <div className="flex items-start justify-between gap-2 mb-1.5">
-                          <h3 className="font-semibold text-gray-900 text-sm leading-snug flex-1">{event.name}</h3>
+                          <h3 style={{ fontFamily: 'Poppins, sans-serif' }} className="font-semibold text-gray-900 text-sm leading-snug flex-1">{event.name}</h3>
                           <span className={`shrink-0 inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full ${c.pill}`}>
                             <span className={`w-1.5 h-1.5 rounded-full ${c.dot}`} />
                             {c.label}
@@ -398,41 +399,42 @@ const Dashboard = () => {
           <div className="bg-white rounded-2xl border border-gray-100 p-5">
             <div className="flex items-center gap-4 mb-5">
               <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center shrink-0">
-                <span className="text-2xl font-bold text-blue-600">
+                <span style={{ fontFamily: 'Poppins, sans-serif' }} className="text-2xl font-bold text-blue-600">
                   {(userData?.name || 'U').charAt(0).toUpperCase()}
                 </span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-bold text-gray-900 text-base truncate">{userData?.name || 'User'}</p>
-                <p className="text-sm text-gray-400 truncate">{userData?.email}</p>
+                <p style={{ fontFamily: 'Poppins, sans-serif' }} className="font-bold text-gray-900 text-base truncate">{userData?.name || 'User'}</p>
+                <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm text-gray-400 truncate">{userData?.email}</p>
               </div>
             </div>
 
             <div className="divide-y divide-gray-50">
               <div className="py-3 flex justify-between">
-                <p className="text-sm text-gray-400">Role</p>
-                <p className="text-sm font-semibold text-gray-800">
+                <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm text-gray-400">Role</p>
+                <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm font-semibold text-gray-800">
                   {userData?.role === 'SUPER_ADMIN' ? 'Super Admin' :
                    userData?.role === 'ORGANIZER' ? 'Organizer' :
                    userData?.role === 'ORGANIZER_PENDING' ? 'Organizer (Pending)' : 'Member'}
                 </p>
               </div>
               <div className="py-3 flex justify-between">
-                <p className="text-sm text-gray-400">Designation</p>
-                <p className="text-sm font-semibold text-gray-800">{userData?.designation || 'â€”'}</p>
+                <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm text-gray-400">Designation</p>
+                <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm font-semibold text-gray-800">{userData?.designation || 'â€"'}</p>
               </div>
               <div className="py-3 flex justify-between">
-                <p className="text-sm text-gray-400">Company</p>
-                <p className="text-sm font-semibold text-gray-800 text-right">{userData?.company || 'â€”'}</p>
+                <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm text-gray-400">Company</p>
+                <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm font-semibold text-gray-800 text-right">{userData?.company || 'â€"'}</p>
               </div>
               {userData?.linkedin_url && (
                 <div className="py-3 flex justify-between items-center">
-                  <p className="text-sm text-gray-400">LinkedIn</p>
+                  <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-sm text-gray-400">LinkedIn</p>
                   <a
                     href={userData.linkedin_url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-semibold text-blue-600"
+                    style={{ fontFamily: 'Poppins, sans-serif' }}
                   >
                     View â†’
                   </a>
@@ -530,7 +532,7 @@ const Dashboard = () => {
 
           {/* Utilities card */}
           <div className="bg-white rounded-[28px] border border-gray-100 p-6 shadow-sm">
-            <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Quick Actions</h3>
+            <h3 style={{ fontFamily: 'Poppins, sans-serif' }} className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Quick Actions</h3>
             <div className="space-y-2">
               <button onClick={() => navigate('/')} className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-2xl hover:bg-gray-900 hover:text-white transition-all group">
                 <span className="text-xs uppercase font-black">Find Events</span>
@@ -550,8 +552,8 @@ const Dashboard = () => {
           {/* Promo card */}
           <div className="bg-gradient-to-br from-indigo-500 to-purple-700 rounded-[28px] p-6 text-white shadow-xl shadow-indigo-200 overflow-hidden relative group">
             <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-            <p className="text-lg font-black leading-tight mb-2 relative z-10">Unlock more.</p>
-            <p className="text-xs text-indigo-100 font-medium opacity-80 mb-6 relative z-10">Organize events, build your network, and take control.</p>
+            <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-lg font-black leading-tight mb-2 relative z-10">Unlock more.</p>
+            <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-xs text-indigo-100 font-medium opacity-80 mb-6 relative z-10">Organize events, build your network, and take control.</p>
             <button onClick={() => navigate('/')} className="w-full bg-white text-indigo-700 rounded-xl text-xs font-black uppercase tracking-widest py-3 shadow-lg hover:-translate-y-1 transition-all relative z-10">Explore ✨</button>
           </div>
         </aside>
@@ -618,8 +620,8 @@ const Dashboard = () => {
           >
             {/* drag handle */}
             <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-5" />
-            <p className="text-xs text-gray-400 text-center font-medium mb-1">Scan to Join</p>
-            <h3 className="text-base font-bold text-gray-900 text-center mb-6 leading-snug">{selectedEvent.name}</h3>
+            <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-xs text-gray-400 text-center font-medium mb-1">Scan to Join</p>
+            <h3 style={{ fontFamily: 'Poppins, sans-serif' }} className="text-base font-bold text-gray-900 text-center mb-6 leading-snug">{selectedEvent.name}</h3>
             <div className="flex justify-center mb-5">
               <div className="p-4 border-2 border-gray-100 rounded-2xl">
                 <QRCodeSVG
@@ -631,7 +633,7 @@ const Dashboard = () => {
                 />
               </div>
             </div>
-            <p className="text-xs text-gray-400 text-center mb-6 break-all px-4">
+            <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-xs text-gray-400 text-center mb-6 break-all px-4">
               {window.location.origin}/event/{selectedEvent.slug}
             </p>
             <div className="flex gap-3">
