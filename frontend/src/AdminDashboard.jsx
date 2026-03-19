@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { auth } from './config/firebase'
+import API_BASE_URL from './config/api'
 
 const AdminDashboard = () => {
   const [pendingEvents, setPendingEvents] = useState([])
@@ -8,7 +9,7 @@ const AdminDashboard = () => {
   const fetchPending = async () => {
     try {
       const idToken = await auth.currentUser.getIdToken()
-      const res = await fetch('https://networking-k0cv.onrender.com/api/events/admin/pending', {
+      const res = await fetch(`${API_BASE_URL}/events/admin/pending`, {
         headers: { 'Authorization': `Bearer ${idToken}` }
       })
       const data = await res.json()
@@ -22,7 +23,7 @@ const AdminDashboard = () => {
 
   const handleAction = async (id, action) => {
     const idToken = await auth.currentUser.getIdToken()
-    await fetch(`https://networking-k0cv.onrender.com/api/events/${id}/${action}`, {
+    await fetch(`${API_BASE_URL}/events/${id}/${action}`, {
       method: 'PATCH',
       headers: { 'Authorization': `Bearer ${idToken}` }
     })

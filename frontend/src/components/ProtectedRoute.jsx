@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../config/firebase'
+import API_BASE_URL from '../config/api'
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const [user, setUser] = useState(null)
@@ -14,7 +15,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
       if (currentUser) {
         try {
           const idToken = await currentUser.getIdToken()
-          const res = await fetch('https://networking-k0cv.onrender.com/api/users/profile', {
+          const res = await fetch(`${API_BASE_URL}/users/profile`, {
             headers: { 'Authorization': `Bearer ${idToken}` }
           })
           const data = await res.json()

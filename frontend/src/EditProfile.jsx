@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { auth } from './config/firebase'
 import { useNavigate } from 'react-router-dom'
+import API_BASE_URL from './config/api'
 
 const EditProfile = () => {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ const EditProfile = () => {
     const fetchProfile = async () => {
       try {
         const idToken = await auth.currentUser.getIdToken()
-        const response = await fetch('https://networking-k0cv.onrender.com/api/users/profile', {
+        const response = await fetch(`${API_BASE_URL}/users/profile`, {
           headers: { 'Authorization': `Bearer ${idToken}` }
         })
         const data = await response.json()
@@ -46,7 +47,7 @@ const EditProfile = () => {
     setSuccess(false)
     try {
       const idToken = await auth.currentUser.getIdToken()
-      const response = await fetch('https://networking-k0cv.onrender.com/api/users/profile', {
+      const response = await fetch(`${API_BASE_URL}/users/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

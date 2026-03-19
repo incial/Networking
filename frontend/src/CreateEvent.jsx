@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { auth } from './config/firebase'
 import { useNavigate } from 'react-router-dom'
+import API_BASE_URL from './config/api'
 
 const SUGGESTED_TAGS = ['Investor', 'Startup Founder', 'Developer', 'Designer', 'Product Manager', 'Marketing', 'Sales', 'Recruiter', 'Mentor', 'Student']
 
@@ -41,7 +42,7 @@ const CreateEvent = () => {
     setError('')
     try {
       const idToken = await auth.currentUser.getIdToken()
-      const response = await fetch('https://networking-k0cv.onrender.com/api/events', {
+      const response = await fetch(`${API_BASE_URL}/events`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

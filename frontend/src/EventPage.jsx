@@ -2,6 +2,7 @@
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './config/firebase'
+import API_BASE_URL from './config/api'
 
 const EventPage = () => {
   const { slug } = useParams()
@@ -21,7 +22,7 @@ const EventPage = () => {
   const [joinForm, setJoinForm] = useState({ linkedin_url: '', company: '', designation: '' })
 
   useEffect(() => {
-    fetch(`https://networking-k0cv.onrender.com/api/events/slug/${slug}`)
+    fetch(`${API_BASE_URL}/events/slug/${slug}`)
       .then(res => { if (!res.ok) throw new Error(); return res.json() })
       .then(data => setEvent(data))
       .catch(() => setEventError('Event not found or no longer available.'))
@@ -40,8 +41,8 @@ const EventPage = () => {
       try {
         const idToken = await authUser.getIdToken()
         const [tagsRes, profileRes] = await Promise.all([
-          fetch(`https://networking-k0cv.onrender.com/api/tags/events/${event.id}`, { headers: { Authorization: `Bearer ${idToken}` } }),
-          fetch('https://networking-k0cv.onrender.com/api/users/profile',            { headers: { Authorization: `Bearer ${idToken}` } })
+          fetch(`${API_BASE_URL}/tags/events/${event.id}`, { headers: { Authorization: `Bearer ${idToken}` } }),
+          fetch(`${API_BASE_URL}/users/profile`,            { headers: { Authorization: `Bearer ${idToken}` } })
         ])
         const [tagsData, profileData] = await Promise.all([tagsRes.json(), profileRes.json()])
         if (Array.isArray(tagsData)) setTags(tagsData)
@@ -71,7 +72,7 @@ const EventPage = () => {
     setJoinError('')
     try {
       const idToken = await authUser.getIdToken()
-      const res = await fetch(`https://networking-k0cv.onrender.com/api/participants/join/${slug}`, {
+      const res = await fetch(`${API_BASE_URL}/participants/join/${slug}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${idToken}` },
         body: JSON.stringify({ join_method: 'QR', selected_tags: selectedTags, ...joinForm })

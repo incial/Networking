@@ -7,6 +7,7 @@ import {
   onAuthStateChanged
 } from 'firebase/auth'
 import { auth, googleProvider } from './config/firebase'
+import API_BASE_URL from './config/api'
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(false)
@@ -47,7 +48,7 @@ const Auth = () => {
       const idToken = await user.getIdToken()
 
       // Sync user with backend
-      await fetch('https://networking-k0cv.onrender.com/api/auth/sync', {
+      await fetch(`${API_BASE_URL}/auth/sync`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +80,7 @@ const Auth = () => {
       const idToken = await user.getIdToken()
 
       // Sync user with backend
-      await fetch('https://networking-k0cv.onrender.com/api/auth/sync', {
+      await fetch(`${API_BASE_URL}/auth/sync`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -50,7 +50,7 @@ const Home = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="px-6 lg:px-12">
+      <section className="px-6 lg:px-[100px] ">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
           {/* Left Content */}
@@ -58,7 +58,7 @@ const Home = () => {
             <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-slate-500 text-sm font-500 mb-4">You're invited to join</p>
             
             <h1 style={{ fontFamily: 'Poppins, sans-serif' }} className="text-5xl lg:text-6xl font-semibold text-black leading-tight mb-6">
-              Night of the <br /> Enable House
+             Connect. Collaborate.<br />Grow Your Network.
             </h1>
             
             <p style={{ fontFamily: 'Poppins, sans-serif' }} className="text-slate-600 text-base font-400 mb-8 max-w-md leading-relaxed">
